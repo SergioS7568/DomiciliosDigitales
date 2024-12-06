@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 # React + TypeScript + Vite
+=======
+# Domicilios Digitales
+
+# React + TypeScript + Vite 
+>>>>>>> d8d5298531b6ad089e5036fa7e68f751b69aebf1
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
