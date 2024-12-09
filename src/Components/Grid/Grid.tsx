@@ -12,7 +12,7 @@ import {
   XsColTypes,
 } from "./gridEnums";
 
-import { cn, removeLineBreaks } from "../../lib/utils";
+import { cn, removeLineBreaks } from "../../Lib/utils";
 
 export type GridProps = Record<string, unknown> &
   (
