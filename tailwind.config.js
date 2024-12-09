@@ -5,7 +5,11 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        Roboto: ["Roboto", "sans-serif"],
+        roboto: ["Roboto", "sans-serif"],
+        robotoArial: ["Roboto", "Arial"],
+      },
+      fontSize: {
+        regularSizedText: ["17.6px", "1.5"],
       },
     },
   },
