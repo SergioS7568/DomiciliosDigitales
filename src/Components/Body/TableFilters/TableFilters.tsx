@@ -1,21 +1,21 @@
 import { useForm } from "react-hook-form";
 import Grid from "../../Grid/Grid";
 
-import HookToggleModal from "../../Hooks/HookToggleModal";
+import useHookToggleModal from "../../Hooks/useHookToggleModal";
 
 import { ModalFilter } from "../ModalFilter/ModalFilter";
 
 const TableFilters = () => {
   const { register, handleSubmit } = useForm();
-  const { isOpen, toggleModal } = HookToggleModal();
+  const { isOpen, toggleModal } = useHookToggleModal();
 
-  const onSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log("Selected number: ", event.target.value);
-    const value: string = event.target.value;
-    console.log(value);
+  const onSubmit = (data: string) => {
+    if (data) {
+      console.log(data);
+    } else {
+      console.log(" no value selected ", data);
+    }
   };
-
-  const onSubmit = (data: number) => console.log(data);
 
   return (
     <div>
@@ -63,9 +63,7 @@ const TableFilters = () => {
                   >
                     <select
                       id="numberSelect"
-                      {...register("number")}
-                      onChange={onSelectChange}
-                      // ref={register({ required: "select one option" })}
+                      {...register("pageSize")}
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     >
                       <option value={15}>15</option>
@@ -80,6 +78,20 @@ const TableFilters = () => {
                   className="btn flex items-center"
                 >
                   <button className="btn btn-square" onClick={toggleModal}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="size-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+                      />
+                    </svg>{" "}
                     buscar
                   </button>
                 </label>
