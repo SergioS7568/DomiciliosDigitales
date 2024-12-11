@@ -1,12 +1,12 @@
-import { ReactNode } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, UseFormRegister, FieldValues } from "react-hook-form";
 
 import "./ModalFilter.css";
 import Grid from "../../Grid/Grid";
+
 interface Props {
-  children?: ReactNode;
   isOpen: boolean;
   toggleModal: () => void;
+  register: UseFormRegister<FieldValues>;
 }
 
 const defaultValues = {
@@ -16,15 +16,14 @@ const defaultValues = {
 };
 
 export const ModalFilter = (props: Props) => {
-  const { register, handleSubmit, reset } = useForm({ defaultValues });
+  const { handleSubmit, reset } = useForm({ defaultValues });
+  const register = props.register;
 
   const onClickHandleExit = () => {
     props.toggleModal();
   };
 
-  const onSubmit = (d) => {
-    alert(JSON.stringify(d));
-
+  const onSubmit = () => {
     props.toggleModal();
   };
   return (
@@ -32,20 +31,22 @@ export const ModalFilter = (props: Props) => {
       {props.isOpen && (
         <div className="modal-overlay " onClick={props.toggleModal}>
           <div className="modal-box " onClick={(e) => e.stopPropagation()}>
-            <div className="flex flex-col gap-3">
-              <h1 className="  font-bold text-gray-900 text-start ">
+            <div className="flex flex-col gap-3 m-1 ">
+              <h1 className="  font-bold text-gray-900 text-start   font-Roboto ">
                 Filtrar Resultados
               </h1>
-              <p className="  font-normal text-start ">
+              <p className="  font-normal text-start  font-Roboto  ">
                 Aqui puede filtrar según uno o varios de los siguientes campos:
               </p>
+
               <form
-                className="flex flex-col gap-2 text-start font-medium text-gray-800 "
+                className="flex flex-col gap-2  text-start font-medium text-gray-800  font-Roboto  "
                 onSubmit={handleSubmit(onSubmit)}
               >
                 <label>
                   <input
                     id="lastnameInputID"
+                    placeholder="Apellido"
                     className="bg-white outline outline-1  rounded-sm outline-stone-300  "
                     {...register("lastname")}
                   />
@@ -53,7 +54,8 @@ export const ModalFilter = (props: Props) => {
                 <label>
                   <input
                     id="nameInputID"
-                    className="bg-white outline outline-1  rounded-sm outline-stone-300  "
+                    placeholder="Nombre"
+                    className="bg-white outline outline-1  rounded-sm outline-stone-300 "
                     {...register("name")}
                   />
                 </label>
@@ -64,7 +66,9 @@ export const ModalFilter = (props: Props) => {
                     className="bg-white outline outline-1  rounded-sm outline-stone-300  "
                     {...register("profile.name")}
                   >
-                    <option></option>
+                    <option value="" disabled hidden selected>
+                      Perfil
+                    </option>
                     <option>ABOGADO/PROCURADOR</option>
                     <option>ENTIDAD</option>
                     <option>PERITO/OTRO</option>
@@ -81,7 +85,7 @@ export const ModalFilter = (props: Props) => {
                       lg={6}
                       className="gap-1"
                     >
-                      <div className="justify-self-start sm:justify-self-center">
+                      <div className="justify-self-start sm:justify-self-center md:justify-center">
                         <label>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -100,6 +104,7 @@ export const ModalFilter = (props: Props) => {
                           <button
                             type="button"
                             onClick={() => reset(defaultValues)}
+                            className=" font-bold   "
                           >
                             LIMPIAR
                           </button>
@@ -109,17 +114,17 @@ export const ModalFilter = (props: Props) => {
                     <Grid item xs={12} sm={6} md={6} xl={6} lg={6}>
                       <div className="justify-self-center ">
                         <button
-                          className="btn btn-ghost"
+                          className="btn btn-ghost font-bold  text-red-600  "
                           onClick={onClickHandleExit}
                         >
                           CANCELAR
                         </button>
                         <button
-                          className="btn btn-ghost"
+                          className="btn btn-ghost font-bold text-lightBlueShift-0 "
                           type="submit"
                           value="submit"
                         >
-                          BUSCAR
+                          <label> BUSCAR</label>
                         </button>
                       </div>
                     </Grid>
