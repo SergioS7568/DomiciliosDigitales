@@ -27,7 +27,9 @@ interface Props {
 const defaultValues = {
   lastname: "",
   name: "",
-  "profile.name": "",
+  profile: {
+    name: "",
+  },
 };
 
 export const ModalFilter = (props: Props) => {
@@ -79,15 +81,18 @@ export const ModalFilter = (props: Props) => {
                   <select
                     id="selectProfileID"
                     aria-label="selectProfileID"
+                    defaultValue={"DEFAULT"}
                     className="bg-white outline outline-1  rounded-sm outline-stone-300  "
                     {...register("profile.name")}
                   >
-                    <option value="" disabled hidden selected>
+                    <option value="DEFAULT" disabled hidden>
                       Perfil
                     </option>
-                    <option>ABOGADO/PROCURADOR</option>
-                    <option>ENTIDAD</option>
-                    <option>PERITO/OTRO</option>
+                    <option value={"ABOGADO/PROCURADOR"}>
+                      ABOGADO/PROCURADOR
+                    </option>
+                    <option value={"ENTIDAD"}>ENTIDAD</option>
+                    <option value={"PERITO/OTRO"}>PERITO/OTRO</option>
                   </select>
                 </label>
                 <div className="gap-2">

@@ -1,11 +1,12 @@
 import { useForm } from "react-hook-form";
+import { useQuery } from "@tanstack/react-query";
 
 import Grid from "../../Grid/Grid";
-
 import useHookToggleModal from "../../Hooks/useHookToggleModal";
 import { ModalFilter } from "../ModalFilter/ModalFilter";
+import { getUsersInfo } from "../../../Lib/getUsersInfo";
 
-interface datatype {
+interface Datatype {
   pageSize: number;
   name: string;
   lastname: string;
@@ -15,20 +16,33 @@ interface datatype {
 }
 
 const TableFilters = () => {
-  const { register, handleSubmit, watch, reset } = useForm<datatype>();
+  const { register, handleSubmit, watch, reset } = useForm<Datatype>();
   const { isOpen, toggleModal } = useHookToggleModal();
 
   const watchedValues = watch(); // This will watch all fields
   const { name, lastname, profile, pageSize } = watchedValues;
   const profileName = profile ? profile.name : "";
 
-  const onSubmit = (data: datatype) => {
-    if (data) {
-      console.log(data);
+  const onSubmit = (data: Datatype) => {
+    if (data.pageSize) {
+      console.log(data.pageSize);
+      getUsersInfo([pageSize]);
     } else {
       console.log(" no value selected ", data);
     }
   };
+
+  const {
+    data: Api,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: [pageSize],
+    queryFn: (context) => {
+      const queryKey = context.queryKey as [number];
+      return getUsersInfo(queryKey);
+    },
+  });
 
   return (
     <div>
