@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import { useState } from "react";
 
 import Grid from "../../Grid/Grid";
 
@@ -16,19 +15,15 @@ interface datatype {
 }
 
 const TableFilters = () => {
-  const [name, setName] = useState("1");
-  const [lastname, setLastName] = useState("2");
-  const [profileName, setProfileName] = useState("3");
-  const [pageSize, setPageSize] = useState(15);
-  const { register, handleSubmit, getValues } = useForm();
+  const { register, handleSubmit, watch, reset } = useForm<datatype>();
   const { isOpen, toggleModal } = useHookToggleModal();
+
+  const watchedValues = watch(); // This will watch all fields
+  const { name, lastname, profile, pageSize } = watchedValues;
+  const profileName = profile ? profile.name : "";
 
   const onSubmit = (data: datatype) => {
     if (data) {
-      setName(data.name);
-      setLastName(data.lastname);
-      setProfileName(data.profile.name);
-      setPageSize(data.pageSize);
       console.log(data);
     } else {
       console.log(" no value selected ", data);
@@ -43,31 +38,49 @@ const TableFilters = () => {
             <Grid item xs={12} md={6} sm={12}>
               <div className="flex flex-row ">
                 <p>Listado</p>
+                {name ? (
+                  <button
+                    value={"name"}
+                    className="btn btn-circle"
+                    onClick={() => reset({ ...watchedValues, name: "" })}
+                    {...register("name")}
+                    type="submit"
+                  >
+                    {name}
+                  </button>
+                ) : (
+                  <></>
+                )}
 
-                {/* <button
-                  value={"a"}
-                  className="btn btn-circle"
-                  {...register("example 1")}
-                  type="submit"
-                >
-                  a
-                </button>
-                <button
-                  value={"a"}
-                  className="btn btn-circle"
-                  {...register("example 1")}
-                  type="submit"
-                >
-                  b
-                </button>
-                <button
-                  value={"a"}
-                  className="btn btn-circle"
-                  {...register("example 1")}
-                  type="submit"
-                >
-                  c
-                </button> */}
+                {lastname ? (
+                  <button
+                    value={"lastname"}
+                    className="btn btn-circle"
+                    onClick={() => reset({ ...watchedValues, lastname: "" })}
+                    {...register("lastname")}
+                    type="submit"
+                  >
+                    {lastname}
+                  </button>
+                ) : (
+                  <></>
+                )}
+
+                {profileName ? (
+                  <button
+                    value={"profile"}
+                    className="btn btn-circle"
+                    onClick={() =>
+                      reset({ ...watchedValues, profile: { name: "" } })
+                    }
+                    {...register("profile.name")}
+                    type="submit"
+                  >
+                    {profileName}
+                  </button>
+                ) : (
+                  <></>
+                )}
               </div>
             </Grid>
             <Grid item xs={12} md={6} sm={12}>
@@ -95,14 +108,7 @@ const TableFilters = () => {
                   htmlFor="modal_toggle_filter"
                   className="btn flex items-center"
                 >
-                  <button
-                    className="btn btn-square"
-                    onClick={toggleModal}
-                    onFocus={() => {
-                      const values = getValues();
-                      console.log(values);
-                    }}
-                  >
+                  <button className="btn btn-square" onClick={toggleModal}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -127,6 +133,8 @@ const TableFilters = () => {
             isOpen={isOpen}
             toggleModal={toggleModal}
             register={register}
+            reset={reset}
+            handleSubmit={handleSubmit}
           ></ModalFilter>
         </div>
         <h1>{lastname}</h1>

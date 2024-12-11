@@ -1,12 +1,27 @@
-import { useForm, UseFormRegister, FieldValues } from "react-hook-form";
+import {
+  UseFormRegister,
+  FieldValues,
+  UseFormReset,
+  UseFormHandleSubmit,
+} from "react-hook-form";
 
 import "./ModalFilter.css";
 import Grid from "../../Grid/Grid";
 
+interface datatype {
+  pageSize: number;
+  name: string;
+  lastname: string;
+  profile: {
+    name: string;
+  };
+}
 interface Props {
   isOpen: boolean;
   toggleModal: () => void;
-  register: UseFormRegister<FieldValues>;
+  register: UseFormRegister<datatype>;
+  reset: UseFormReset<datatype>;
+  handleSubmit: UseFormHandleSubmit<FieldValues, undefined>;
 }
 
 const defaultValues = {
@@ -16,8 +31,9 @@ const defaultValues = {
 };
 
 export const ModalFilter = (props: Props) => {
-  const { handleSubmit, reset } = useForm({ defaultValues });
   const register = props.register;
+  const reset = props.reset;
+  const handleSubmit = props.handleSubmit;
 
   const onClickHandleExit = () => {
     props.toggleModal();
