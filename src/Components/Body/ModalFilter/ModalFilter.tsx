@@ -20,14 +20,14 @@ interface Datatype {
 }
 
 interface DataTyped {
-  name: string;
   lastname: string;
+  name: string;
   profile: string;
 }
 
 interface DataPersonnalType {
-  name: string;
   lastname: string;
+  name: string;
   profile: string;
 }
 interface Props {

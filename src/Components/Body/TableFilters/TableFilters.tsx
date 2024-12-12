@@ -6,6 +6,7 @@ import useHookToggleModal from "../../Hooks/useHookToggleModal";
 import { ModalFilter } from "../ModalFilter/ModalFilter";
 import { getUsersInfo, FilteredData } from "../../../Lib/getUsersInfo";
 import React, { useState } from "react";
+import TableContent from "../Table/TableContent";
 
 interface Datatype {
   pageSize: number;
@@ -88,7 +89,7 @@ const TableFilters = (props: Props) => {
     console.log(filteredData);
   };
 
-  const pageSizerino = watch("pageSize");
+  const pageSizeWatch = watch("pageSize");
 
   const handleSelectPageSize = (event) => {
     setPageSize(event.target.value);
@@ -97,164 +98,155 @@ const TableFilters = (props: Props) => {
   return (
     <div>
       <div>
-        <div>
-          <Grid container>
-            <Grid item xs={12} md={6} sm={12}>
-              <div className="flex flex-row ">
-                <p>Listado</p>
-                {name ? (
-                  <button
-                    value={"name"}
-                    className="btn btn-circle"
-                    onClick={() => handleDeleteFilter("name")}
-                  >
-                    {name}
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="size-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                      />
-                    </svg>
-                  </button>
-                ) : (
-                  <></>
-                )}
-
-                {lastname ? (
-                  <button
-                    value={"lastname"}
-                    className="btn btn-circle"
-                    onClick={() => handleDeleteFilter("lastname")}
-                  >
-                    {lastname}
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="size-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                      />
-                    </svg>
-                  </button>
-                ) : (
-                  <></>
-                )}
-
-                {profileName ? (
-                  <button
-                    value={"profile"}
-                    className="btn btn-circle"
-                    onClick={() => handleDeleteFilter("profile")}
-                  >
-                    {profileName}
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="size-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                      />
-                    </svg>
-                  </button>
-                ) : (
-                  <></>
-                )}
-              </div>
-            </Grid>
-            <Grid item xs={12} md={6} sm={12}>
-              <div className=" flex flex-row ">
-                <p>Mostrar</p>
-
-                <form onSubmit={handleSubmit(onSubmit)}>
-                  <label
-                    htmlFor="numberSelect"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    {/* <select
-                      id="numberSelect"
-                      onChange={handleSelectPageSize}
-                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    >
-                      <option>15</option>
-                      <option value={25}>25</option>
-                      <option value={50}>50</option>
-                    </select> */}
-                    <Controller
-                      name="pageSize"
-                      control={control}
-                      render={({ field }) => (
-                        <select {...field}>
-                          <option value="15">15</option>
-                          <option value="25">25</option>
-                          <option value="50">50</option>
-                        </select>
-                      )}
-                    />
-                  </label>
-                </form>
-                <label
-                  htmlFor="modal_toggle_filter"
-                  className="btn flex items-center"
+        <Grid container>
+          <Grid item xs={12} md={6} sm={12}>
+            <div className="flex flex-row ">
+              <p>Listado</p>
+              {name ? (
+                <button
+                  value={"name"}
+                  className="btn btn-circle"
+                  onClick={() => handleDeleteFilter("name")}
                 >
-                  <button className="btn btn-square " onClick={toggleModal}>
-                    buscar
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="size-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-                      />
-                    </svg>
-                  </button>
-                </label>
-              </div>
-            </Grid>
+                  {name}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="size-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                    />
+                  </svg>
+                </button>
+              ) : (
+                <></>
+              )}
+
+              {lastname ? (
+                <button
+                  value={"lastname"}
+                  className="btn btn-circle"
+                  onClick={() => handleDeleteFilter("lastname")}
+                >
+                  {lastname}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="size-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                    />
+                  </svg>
+                </button>
+              ) : (
+                <></>
+              )}
+
+              {profileName ? (
+                <button
+                  value={"profile"}
+                  className="btn btn-circle"
+                  onClick={() => handleDeleteFilter("profile")}
+                >
+                  {profileName}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="size-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                    />
+                  </svg>
+                </button>
+              ) : (
+                <></>
+              )}
+            </div>
           </Grid>
-          <ModalFilter
-            isOpen={isOpen}
-            toggleModal={toggleModal}
-            register={register}
-            reset={reset}
-            handleSubmit={handleSubmit}
-            filteredData={filteredData}
-            setFilteredData={setFilteredData}
-            setPageNumber={setPageNumber}
-            control={control}
-            watch={watch}
-          ></ModalFilter>
-        </div>
-        <h1>{filteredData.lastname}</h1>
-        <h1>{filteredData.name}</h1>
-        <h1>{filteredData.profile}</h1>
-        <h1>{pageSizerino}</h1>
+          <Grid item xs={12} md={6} sm={12}>
+            <div className=" flex flex-row ">
+              <p>Mostrar</p>
+
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <label
+                  htmlFor="numberSelect"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  <Controller
+                    name="pageSize"
+                    control={control}
+                    render={({ field }) => (
+                      <select {...field}>
+                        <option value="15">15</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                      </select>
+                    )}
+                  />
+                </label>
+              </form>
+              <label
+                htmlFor="modal_toggle_filter"
+                className="btn flex items-center"
+              >
+                <button className="btn btn-square " onClick={toggleModal}>
+                  buscar
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="size-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
+                    />
+                  </svg>
+                </button>
+              </label>
+            </div>
+          </Grid>
+        </Grid>
+        <ModalFilter
+          isOpen={isOpen}
+          toggleModal={toggleModal}
+          register={register}
+          reset={reset}
+          handleSubmit={handleSubmit}
+          filteredData={filteredData}
+          setFilteredData={setFilteredData}
+          setPageNumber={setPageNumber}
+          control={control}
+          watch={watch}
+        ></ModalFilter>
       </div>
+
+      <TableContent
+        filteredData={filteredData}
+        pageSizeWatch={pageSizeWatch}
+        pageNumber={pageNumber}
+      ></TableContent>
     </div>
   );
 };
