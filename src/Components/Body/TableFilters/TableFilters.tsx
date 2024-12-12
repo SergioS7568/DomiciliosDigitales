@@ -1,11 +1,10 @@
 import { Controller, useForm } from "react-hook-form";
-import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 import Grid from "../../Grid/Grid";
 import useHookToggleModal from "../../Hooks/useHookToggleModal";
 import { ModalFilter } from "../ModalFilter/ModalFilter";
 import { FilteredData } from "../../../Lib/getUsersInfo";
-import React, { useState } from "react";
 import TableContent from "../Table/TableContent";
 
 interface Datatype {
@@ -247,10 +246,6 @@ const TableFilters = (props: Props) => {
         pageSizeWatch={pageSizeWatch}
         pageNumber={pageNumber}
       ></TableContent>
-
-      <div className="block lg:hidden m-2">
-        <p>cards</p>
-      </div>
     </div>
   );
 };
