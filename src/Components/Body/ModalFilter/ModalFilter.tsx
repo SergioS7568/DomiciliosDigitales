@@ -1,47 +1,84 @@
 import {
+  Control,
+  Controller,
   UseFormRegister,
-  FieldValues,
   UseFormReset,
-  UseFormHandleSubmit,
+  UseFormWatch,
 } from "react-hook-form";
+import { FilteredData } from "../../../Lib/getUsersInfo";
 
 import "./ModalFilter.css";
 import Grid from "../../Grid/Grid";
+import React from "react";
 
-interface datatype {
+interface Datatype {
   pageSize: number;
+  pageNumber: number;
   name: string;
   lastname: string;
-  profile: {
-    name: string;
-  };
+  profile: string;
+}
+
+interface DataTyped {
+  lastname: string;
+  name: string;
+  profile: string;
+}
+
+interface DataPersonnalType {
+  lastname: string;
+  name: string;
+  profile: string;
 }
 interface Props {
   isOpen: boolean;
   toggleModal: () => void;
-  register: UseFormRegister<datatype>;
-  reset: UseFormReset<datatype>;
-  handleSubmit: UseFormHandleSubmit<FieldValues, undefined>;
+  register: UseFormRegister<Datatype>;
+  reset: UseFormReset<Datatype>;
+  handleSubmit: (onSubmit: (data: Datatype) => void) => (event: any) => void;
+  setFilteredData: React.Dispatch<React.SetStateAction<DataPersonnalType>>;
+  setPageNumber: React.Dispatch<React.SetStateAction<number>>;
+  filteredData: FilteredData;
+  control: Control<Datatype>;
+  watch: UseFormWatch<Datatype>;
 }
 
-const defaultValues = {
-  lastname: "",
-  name: "",
-  "profile.name": "",
-};
-
 export const ModalFilter = (props: Props) => {
-  const register = props.register;
-  const reset = props.reset;
-  const handleSubmit = props.handleSubmit;
+  const {
+    setFilteredData,
+    setPageNumber,
+    handleSubmit,
+    register,
+    reset,
+    control,
+    watch,
+  } = props;
+
+  // const { watch } = useForm<Datatype>();
 
   const onClickHandleExit = () => {
     props.toggleModal();
   };
 
-  const onSubmit = () => {
+  // const onSubmit = ( ) => {
+  //   props.toggleModal();
+  // };
+
+  const onSubmit = (data: DataTyped) => {
+    setFilteredData(data);
+    console.log(" data   " + JSON.stringify(data));
+    setPageNumber(0);
+
     props.toggleModal();
   };
+
+  const handleReset = () => {
+    reset({ lastname: "", name: "", profile: "" });
+    setPageNumber(0);
+
+    setFilteredData({ lastname: "", name: "", profile: "" });
+  };
+
   return (
     <>
       {props.isOpen && (
@@ -59,37 +96,51 @@ export const ModalFilter = (props: Props) => {
                 className="flex flex-col gap-2  text-start font-medium text-gray-800  font-Roboto  "
                 onSubmit={handleSubmit(onSubmit)}
               >
-                <label>
-                  <input
-                    id="lastnameInputID"
-                    placeholder="Apellido"
-                    className="bg-white outline outline-1  rounded-sm outline-stone-300  "
-                    {...register("lastname")}
-                  />
-                </label>
-                <label>
-                  <input
-                    id="nameInputID"
-                    placeholder="Nombre"
-                    className="bg-white outline outline-1  rounded-sm outline-stone-300 "
-                    {...register("name")}
-                  />
-                </label>
-                <label>
-                  <select
-                    id="selectProfileID"
-                    aria-label="selectProfileID"
-                    className="bg-white outline outline-1  rounded-sm outline-stone-300  "
-                    {...register("profile.name")}
-                  >
-                    <option value="" disabled hidden selected>
-                      Perfil
-                    </option>
-                    <option>ABOGADO/PROCURADOR</option>
-                    <option>ENTIDAD</option>
-                    <option>PERITO/OTRO</option>
-                  </select>
-                </label>
+                <Controller
+                  name="lastname"
+                  control={control}
+                  render={({ field }) => (
+                    <input
+                      id="lastnameInputID"
+                      placeholder="Apellido"
+                      className="bg-white outline outline-1  rounded-sm outline-stone-300  "
+                      {...field}
+                    />
+                  )}
+                ></Controller>
+                <Controller
+                  name="name"
+                  control={control}
+                  render={({ field }) => (
+                    <input
+                      id="nameInputID"
+                      placeholder="Nombre"
+                      className="bg-white outline outline-1  rounded-sm outline-stone-300 "
+                      {...field}
+                    />
+                  )}
+                ></Controller>
+                <Controller
+                  name="profile"
+                  control={control}
+                  render={({ field }) => (
+                    <select
+                      id="selectProfileID"
+                      aria-label="selectProfileID"
+                      className="bg-white outline outline-1  rounded-sm outline-stone-300  "
+                      {...field}
+                    >
+                      <option disabled hidden>
+                        Perfil
+                      </option>
+                      <option value={"ABOGADO/PROCURADOR"}>
+                        ABOGADO/PROCURADOR
+                      </option>
+                      <option value={"ENTIDAD"}>ENTIDAD</option>
+                      <option value={"PERITO/OTRO"}>PERITO/OTRO</option>
+                    </select>
+                  )}
+                ></Controller>
                 <div className="gap-2">
                   <Grid container>
                     <Grid
@@ -119,7 +170,8 @@ export const ModalFilter = (props: Props) => {
                           </svg>
                           <button
                             type="button"
-                            onClick={() => reset(defaultValues)}
+                            // onClick={() => reset(defaultValues)}
+                            onClick={handleReset}
                             className=" font-bold   "
                           >
                             LIMPIAR
