@@ -34,19 +34,30 @@ const TableContent = (props: Props) => {
               <td>Perfil</td>
             </tr>
           </thead>
-          <tbody>
-            {ApiUser?.content.map((ApiResult) => {
-              return (
-                <tr key={ApiResult.id}>
-                  <td> {ApiResult.lastname}</td>
+          {isError ? <p>Algo salio mal :/ </p> : <></>}
 
-                  <td> {ApiResult.name}</td>
+          {ApiUser?.pagescontent.totalElements === 0 ? (
+            <p>no value inside </p>
+          ) : (
+            <p>values inside </p>
+          )}
+          {isLoading ? (
+            <p>Cargando datos</p>
+          ) : (
+            <tbody>
+              {ApiUser?.content.map((ApiResult) => {
+                return (
+                  <tr key={ApiResult.id}>
+                    <td> {ApiResult.lastname}</td>
 
-                  <td> {ApiResult.profile.name}</td>
-                </tr>
-              );
-            })}
-          </tbody>
+                    <td> {ApiResult.name}</td>
+
+                    <td> {ApiResult.profile.name}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          )}
         </table>
       </div>
     </div>
