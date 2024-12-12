@@ -1,27 +1,45 @@
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
 
 import Grid from "../../Grid/Grid";
 import useHookToggleModal from "../../Hooks/useHookToggleModal";
 import { ModalFilter } from "../ModalFilter/ModalFilter";
-import { getUsersInfo } from "../../../Lib/getUsersInfo";
+import { getUsersInfo, FilteredData } from "../../../Lib/getUsersInfo";
+import React, { useState } from "react";
 
 interface Datatype {
   pageSize: number;
+  pageNumber: number;
   name: string;
   lastname: string;
-  profile: {
-    name: string;
-  };
+  profile: string;
 }
 
-const TableFilters = () => {
-  const { register, handleSubmit, watch, reset } = useForm<Datatype>();
+const TableFilters = (props: Props) => {
+  const { register, handleSubmit, watch, reset, setValue, control } =
+    useForm<Datatype>({
+      defaultValues: {
+        name: "",
+        lastname: "",
+        profile: "",
+        pageSize: 15,
+        pageNumber: 0,
+      },
+    });
   const { isOpen, toggleModal } = useHookToggleModal();
 
   const watchedValues = watch(); // This will watch all fields
-  const { name, lastname, profile, pageSize } = watchedValues;
-  const profileName = profile ? profile.name : "";
+  const { name, lastname, profile } = watchedValues;
+  const profileName = profile;
+
+  const [filteredData, setFilteredData] = useState<FilteredData>({
+    lastname: "",
+    name: "",
+    profile: "",
+  });
+
+  const [pageNumber, setPageNumber] = useState<number>(0);
+  const [pageSize, setPageSize] = useState<number>(15);
 
   const onSubmit = (data: Datatype) => {
     if (data.pageSize) {
@@ -32,17 +50,49 @@ const TableFilters = () => {
     }
   };
 
-  const {
-    data: Api,
-    isLoading,
-    isError,
-  } = useQuery({
+  useQuery({
     queryKey: [pageSize],
     queryFn: (context) => {
       const queryKey = context.queryKey as [number];
       return getUsersInfo(queryKey);
     },
   });
+
+  const handleDeleteFilter = (filterToRemove: string) => {
+    switch (filterToRemove) {
+      case "lastname":
+        setFilteredData({
+          lastname: "",
+          name: filteredData.name,
+          profile: filteredData.profile,
+        });
+        setValue("lastname", "");
+        break;
+      case "name":
+        setFilteredData({
+          lastname: filteredData.lastname,
+          name: "",
+          profile: filteredData.profile,
+        });
+        setValue("name", "");
+        break;
+      case "profile":
+        setFilteredData({
+          lastname: filteredData.lastname,
+          name: filteredData.name,
+          profile: "",
+        });
+        setValue("profile", "");
+        break;
+    }
+    console.log(filteredData);
+  };
+
+  const pageSizerino = watch("pageSize");
+
+  const handleSelectPageSize = (event) => {
+    setPageSize(event.target.value);
+  };
 
   return (
     <div>
@@ -56,9 +106,7 @@ const TableFilters = () => {
                   <button
                     value={"name"}
                     className="btn btn-circle"
-                    onClick={() => reset({ ...watchedValues, name: "" })}
-                    {...register("name")}
-                    type="submit"
+                    onClick={() => handleDeleteFilter("name")}
                   >
                     {name}
                     <svg
@@ -84,9 +132,7 @@ const TableFilters = () => {
                   <button
                     value={"lastname"}
                     className="btn btn-circle"
-                    onClick={() => reset({ ...watchedValues, lastname: "" })}
-                    {...register("lastname")}
-                    type="submit"
+                    onClick={() => handleDeleteFilter("lastname")}
                   >
                     {lastname}
                     <svg
@@ -112,11 +158,7 @@ const TableFilters = () => {
                   <button
                     value={"profile"}
                     className="btn btn-circle"
-                    onClick={() =>
-                      reset({ ...watchedValues, profile: { name: "" } })
-                    }
-                    {...register("profile.name")}
-                    type="submit"
+                    onClick={() => handleDeleteFilter("profile")}
                   >
                     {profileName}
                     <svg
@@ -148,16 +190,26 @@ const TableFilters = () => {
                     htmlFor="numberSelect"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    <select
+                    {/* <select
                       id="numberSelect"
-                      {...register("pageSize")}
+                      onChange={handleSelectPageSize}
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     >
                       <option>15</option>
                       <option value={25}>25</option>
                       <option value={50}>50</option>
-                    </select>
-                    <input type="submit" placeholder=""></input>
+                    </select> */}
+                    <Controller
+                      name="pageSize"
+                      control={control}
+                      render={({ field }) => (
+                        <select {...field}>
+                          <option value="15">15</option>
+                          <option value="25">25</option>
+                          <option value="50">50</option>
+                        </select>
+                      )}
+                    />
                   </label>
                 </form>
                 <label
@@ -191,12 +243,17 @@ const TableFilters = () => {
             register={register}
             reset={reset}
             handleSubmit={handleSubmit}
+            filteredData={filteredData}
+            setFilteredData={setFilteredData}
+            setPageNumber={setPageNumber}
+            control={control}
+            watch={watch}
           ></ModalFilter>
         </div>
-        <h1>{lastname}</h1>
-        <h1>{name}</h1>
-        <h1>{profileName}</h1>
-        <h1>{pageSize}</h1>
+        <h1>{filteredData.lastname}</h1>
+        <h1>{filteredData.name}</h1>
+        <h1>{filteredData.profile}</h1>
+        <h1>{pageSizerino}</h1>
       </div>
     </div>
   );
