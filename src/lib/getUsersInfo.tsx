@@ -1,12 +1,9 @@
 import { transformedRequestedDataType } from "./GetUsersFormat";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 export interface FilteredData {
-  pageSize: number;
   name: string;
   lastname: string;
-  profile: {
-    name: string;
-  };
+  profile: string;
 }
 
 export const getUsersInfo = async (queryKey: [pageSize: number]) => {
