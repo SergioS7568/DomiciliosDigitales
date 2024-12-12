@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
+
 import { FilteredData, getUsersInfoFilter } from "../../../Lib/getUsersInfo";
-import { useState } from "react";
+import Cards from "../Cards/Cards";
 
 interface Props {
   filteredData: FilteredData;
@@ -34,20 +35,51 @@ const TableContent = (props: Props) => {
               <td>Perfil</td>
             </tr>
           </thead>
+
           <tbody>
-            {ApiUser?.content.map((ApiResult) => {
-              return (
-                <tr key={ApiResult.id}>
-                  <td> {ApiResult.lastname}</td>
+            {isLoading ? (
+              <tr>
+                <td>Cargando datos</td>
+              </tr>
+            ) : isError ? (
+              <tr>
+                <td>Algo salio mal :/ </td>
+              </tr>
+            ) : ApiUser?.pagescontent.totalElements === 0 ? (
+              <tr>
+                <td>no value inside </td>
+              </tr>
+            ) : (
+              ApiUser?.content.map((ApiResult) => {
+                return (
+                  <tr key={ApiResult.id}>
+                    <td> {ApiResult.lastname}</td>
 
-                  <td> {ApiResult.name}</td>
+                    <td> {ApiResult.name}</td>
 
-                  <td> {ApiResult.profile.name}</td>
-                </tr>
-              );
-            })}
+                    <td> {ApiResult.profile.name}</td>
+                  </tr>
+                );
+              })
+            )}
           </tbody>
         </table>
+      </div>
+
+      <div className="block md:hidden lg:hidden m-2">
+        {isLoading ? (
+          <p>Cargando datos</p>
+        ) : isError ? (
+          <p>Algo salio mal :/ </p>
+        ) : ApiUser?.pagescontent.totalElements === 0 ? (
+          <p>no value inside </p>
+        ) : (
+          <div>
+            {ApiUser?.content.map((ApiUser) => {
+              return <Cards ApiUser={ApiUser} key={ApiUser.id}></Cards>;
+            })}
+          </div>
+        )}
       </div>
     </div>
   );
