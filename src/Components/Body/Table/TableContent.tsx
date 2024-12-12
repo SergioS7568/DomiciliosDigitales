@@ -25,35 +25,30 @@ const TableContent = (props: Props) => {
 
   return (
     <div>
-      <h1>{filteredData.lastname} apellido</h1>
-      <h1>{filteredData.name} nombre</h1>
-      <h1>{filteredData.profile} perfil</h1>
-      <h1>{pageSizeWatch}</h1>
+      <div className=" max-sm:hidden max-md:hidden  block...">
+        <table className="table">
+          <thead>
+            <tr>
+              <td>Apellido</td>
+              <td>Nombre</td>
+              <td>Perfil</td>
+            </tr>
+          </thead>
+          <tbody>
+            {ApiUser?.content.map((ApiResult) => {
+              return (
+                <tr key={ApiResult.id}>
+                  <td> {ApiResult.lastname}</td>
 
-      <table className="table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <td>Apellido</td>
-            <td>Nombre</td>
-            <td>Perfil</td>
-          </tr>
-        </thead>
-        <tbody>
-          {ApiUser?.content.map((ApiResult) => {
-            return (
-              <tr key={ApiResult.id}>
-                <td> </td>
-                <td> {ApiResult.lastname}</td>
+                  <td> {ApiResult.name}</td>
 
-                <td> {ApiResult.name}</td>
-
-                <td> {ApiResult.profile.name}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+                  <td> {ApiResult.profile.name}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

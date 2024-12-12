@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import Grid from "../../Grid/Grid";
 import useHookToggleModal from "../../Hooks/useHookToggleModal";
 import { ModalFilter } from "../ModalFilter/ModalFilter";
-import { getUsersInfo, FilteredData } from "../../../Lib/getUsersInfo";
+import { FilteredData } from "../../../Lib/getUsersInfo";
 import React, { useState } from "react";
 import TableContent from "../Table/TableContent";
 
@@ -45,19 +45,19 @@ const TableFilters = (props: Props) => {
   const onSubmit = (data: Datatype) => {
     if (data.pageSize) {
       console.log(data.pageSize);
-      getUsersInfo([pageSize]);
+      // getUsersInfo([pageSize]);
     } else {
       console.log(" no value selected ", data);
     }
   };
 
-  useQuery({
-    queryKey: [pageSize],
-    queryFn: (context) => {
-      const queryKey = context.queryKey as [number];
-      return getUsersInfo(queryKey);
-    },
-  });
+  // useQuery({
+  //   queryKey: [pageSize],
+  //   queryFn: (context) => {
+  //     const queryKey = context.queryKey as [number];
+  //     return getUsersInfo(queryKey);
+  //   },
+  // });
 
   const handleDeleteFilter = (filterToRemove: string) => {
     switch (filterToRemove) {
@@ -247,6 +247,10 @@ const TableFilters = (props: Props) => {
         pageSizeWatch={pageSizeWatch}
         pageNumber={pageNumber}
       ></TableContent>
+
+      <div className="block lg:hidden m-2">
+        <p>cards</p>
+      </div>
     </div>
   );
 };

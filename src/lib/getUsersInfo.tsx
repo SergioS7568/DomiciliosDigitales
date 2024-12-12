@@ -6,51 +6,51 @@ export interface FilteredData {
   profile: string;
 }
 
-export const getUsersInfo = async (queryKey: [pageSize: number]) => {
-  console.log(" you are in the api ");
+// export const getUsersInfo = async (queryKey: [pageSize: number]) => {
+//   console.log(" you are in the api ");
 
-  const [size] = queryKey;
+//   const [size] = queryKey;
 
-  const searchParams = new URLSearchParams();
-  const paging = "paging";
+//   const searchParams = new URLSearchParams();
+//   const paging = "paging";
 
-  if (size && size > 0) {
-    searchParams.append("", `0,${size}`);
-    const urlBackendAndPage = `${BACKEND_URL}${paging}${searchParams.toString()}`;
+//   if (size && size > 0) {
+//     searchParams.append("", `0,${size}`);
+//     const urlBackendAndPage = `${BACKEND_URL}${paging}${searchParams.toString()}`;
 
-    console.log(" urlBackendAndPage      " + urlBackendAndPage);
+//     console.log(" urlBackendAndPage      " + urlBackendAndPage);
 
-    const resultado = await fetch(urlBackendAndPage);
+//     const resultado = await fetch(urlBackendAndPage);
 
-    if (!resultado.ok) {
-      throw new Error("Ocurrio un Problema, mensaje Obligatorio");
-    }
+//     if (!resultado.ok) {
+//       throw new Error("Ocurrio un Problema, mensaje Obligatorio");
+//     }
 
-    const data = await resultado.json();
-    const datatransformed = transformedRequestedDataType(data.data);
-    console.log("datatransformed   ", datatransformed);
-    return datatransformed;
-  } else {
-    searchParams.append("", `0,15`);
-    const urlBackendAndPage = `${BACKEND_URL}${paging}${searchParams.toString()}`;
-    console.log(" urlBackendAndPage      " + urlBackendAndPage);
+//     const data = await resultado.json();
+//     const datatransformed = transformedRequestedDataType(data.data);
+//     console.log("datatransformed   ", datatransformed);
+//     return datatransformed;
+//   } else {
+//     searchParams.append("", `0,15`);
+//     const urlBackendAndPage = `${BACKEND_URL}${paging}${searchParams.toString()}`;
+//     console.log(" urlBackendAndPage      " + urlBackendAndPage);
 
-    const resultado = await fetch(urlBackendAndPage);
+//     const resultado = await fetch(urlBackendAndPage);
 
-    if (!resultado.ok) {
-      throw new Error("Ocurrio un Problema, mensaje Obligatorio");
-    }
+//     if (!resultado.ok) {
+//       throw new Error("Ocurrio un Problema, mensaje Obligatorio");
+//     }
 
-    const data = await resultado.json();
-    const datatransformed = transformedRequestedDataType(data.data);
-    console.log("datatransformed   ", datatransformed);
-    return datatransformed;
-  }
+//     const data = await resultado.json();
+//     const datatransformed = transformedRequestedDataType(data.data);
+//     console.log("datatransformed   ", datatransformed);
+//     return datatransformed;
+//   }
 
-  const emptyResult = size;
+//   const emptyResult = size;
 
-  return emptyResult;
-};
+//   return emptyResult;
+// };
 
 export const getUsersInfoFilter = async (
   queryKey: [filteredData: FilteredData, pageSize: number, pageNumber: number]
@@ -61,19 +61,31 @@ export const getUsersInfoFilter = async (
 
   console.log(" datafilter ", datafilter);
   console.log(" size ", size);
-  console.log(" size ", position);
+  console.log(" position ", position);
   const searchParams = new URLSearchParams();
 
   if (size && size > 0) {
     let filterselect = "";
-    if (datafilter.name && datafilter.name.trim()) {
-      filterselect += `name:${datafilter.name}&`;
-    }
-    if (datafilter.lastname && datafilter.lastname.trim()) {
-      filterselect += `lastname:${datafilter.lastname}&`;
-    }
-    if (datafilter.profile && datafilter.profile.trim()) {
-      filterselect += `profile.name:${datafilter.profile}&`;
+    if (
+      datafilter.lastname.trim() ||
+      datafilter.name.trim() ||
+      datafilter.profile.trim()
+    ) {
+      console.log(" inside 1");
+
+      if (datafilter.name && datafilter.name.trim()) {
+        filterselect += `name:${datafilter.name},`;
+      }
+      if (datafilter.lastname && datafilter.lastname.trim()) {
+        filterselect += `lastname:${datafilter.lastname},`;
+      }
+      if (datafilter.profile && datafilter.profile.trim()) {
+        filterselect += `profile.name:${datafilter.profile},`;
+      }
+      filterselect += `&`;
+    } else {
+      console.log(" inside 2 ");
+      filterselect += `&`;
     }
 
     searchParams.append("paging", `${position},${size}`);
@@ -94,7 +106,8 @@ export const getUsersInfoFilter = async (
     console.log("datatransformed   ", datatransformed);
     return datatransformed;
   } else {
-    searchParams.append("=", `0,15`);
+    console.log(" outside ");
+    searchParams.append("paging", `0,15`);
     const urlBackendAndPage = `${BACKEND_URL}${searchParams.toString()}`;
 
     console.log(" urlBackendAndPage      " + urlBackendAndPage);
