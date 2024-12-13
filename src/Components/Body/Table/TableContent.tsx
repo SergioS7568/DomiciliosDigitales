@@ -83,18 +83,27 @@ const TableContent = (props: Props) => {
           </div>
         )}
       </div>
-      <ButtonsNavegation
-        pageNumber={ApiUser?.pagescontent.pageNumber}
-        pageSize={ApiUser?.pagescontent.pageSize}
-        numberOfElements={ApiUser?.pagescontent.numberOfElements}
-        last={ApiUser?.pagescontent.last}
-        first={ApiUser?.pagescontent.first}
-        totalElements={ApiUser?.pagescontent.totalElements}
-        totalPages={ApiUser?.pagescontent.totalPages}
-        offset={ApiUser?.pagescontent.offset}
-        setPageNumber={setPageNumber}
-        pageNumberSET={pageNumber}
-      ></ButtonsNavegation>
+
+      {isLoading ? (
+        <p>Cargando datos</p>
+      ) : isError ? (
+        <p>Algo salio mal :/ </p>
+      ) : ApiUser?.pagescontent.totalElements === 0 ? (
+        <p>no value inside </p>
+      ) : (
+        <ButtonsNavegation
+          pageNumber={ApiUser?.pagescontent.pageNumber}
+          pageSize={ApiUser?.pagescontent.pageSize}
+          numberOfElements={ApiUser?.pagescontent.numberOfElements}
+          last={ApiUser?.pagescontent.last}
+          first={ApiUser?.pagescontent.first}
+          totalElements={ApiUser?.pagescontent.totalElements}
+          totalPages={ApiUser?.pagescontent.totalPages}
+          offset={ApiUser?.pagescontent.offset}
+          setPageNumber={setPageNumber}
+          pageNumberSET={pageNumber}
+        ></ButtonsNavegation>
+      )}
     </div>
   );
 };

@@ -188,7 +188,8 @@ const TableFilters = (props: Props) => {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <label
                   htmlFor="numberSelect"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  // className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-sm font-medium "
                 >
                   <Controller
                     name="pageSize"

@@ -82,7 +82,10 @@ export const ModalFilter = (props: Props) => {
   return (
     <>
       {props.isOpen && (
-        <div className="modal-overlay " onClick={props.toggleModal}>
+        <div
+          className="modal-overlay z-10 backdrop-blur-sm"
+          onClick={props.toggleModal}
+        >
           <div className="modal-box " onClick={(e) => e.stopPropagation()}>
             <div className="flex flex-col gap-3 m-1 ">
               <h1 className="  font-bold text-gray-900 text-start   font-Roboto ">
