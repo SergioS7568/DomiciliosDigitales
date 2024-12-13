@@ -40,6 +40,7 @@ const TableFilters = (props: Props) => {
 
   const [pageNumber, setPageNumber] = useState<number>(0);
   const [pageSize, setPageSize] = useState<number>(15);
+  console.log("page number is ...", pageNumber);
 
   const onSubmit = (data: Datatype) => {
     if (data.pageSize) {
@@ -245,6 +246,7 @@ const TableFilters = (props: Props) => {
         filteredData={filteredData}
         pageSizeWatch={pageSizeWatch}
         pageNumber={pageNumber}
+        setPageNumber={setPageNumber}
       ></TableContent>
     </div>
   );

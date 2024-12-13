@@ -2,16 +2,18 @@ import { useQuery } from "@tanstack/react-query";
 
 import { FilteredData, getUsersInfoFilter } from "../../../Lib/getUsersInfo";
 import Cards from "../Cards/Cards";
+import ButtonsNavegation from "../Buttons/ButtonsNavegation";
 
 interface Props {
   filteredData: FilteredData;
   pageSizeWatch: number;
   pageNumber: number;
+  setPageNumber: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const TableContent = (props: Props) => {
-  const { filteredData, pageSizeWatch, pageNumber } = props;
-
+  const { filteredData, pageSizeWatch, pageNumber, setPageNumber } = props;
+  console.log("page number is ...", pageNumber);
   const {
     data: ApiUser,
     isError,
@@ -81,6 +83,18 @@ const TableContent = (props: Props) => {
           </div>
         )}
       </div>
+      <ButtonsNavegation
+        pageNumber={ApiUser?.pagescontent.pageNumber}
+        pageSize={ApiUser?.pagescontent.pageSize}
+        numberOfElements={ApiUser?.pagescontent.numberOfElements}
+        last={ApiUser?.pagescontent.last}
+        first={ApiUser?.pagescontent.first}
+        totalElements={ApiUser?.pagescontent.totalElements}
+        totalPages={ApiUser?.pagescontent.totalPages}
+        offset={ApiUser?.pagescontent.offset}
+        setPageNumber={setPageNumber}
+        pageNumberSET={pageNumber}
+      ></ButtonsNavegation>
     </div>
   );
 };
