@@ -12,6 +12,12 @@ export default {
       fontSize: {
         regularSizedText: ["17.6px", "1.5"],
       },
+      maxWidth: {
+        maxwith8: ["90% ", " 1300px "],
+      },
+      maxHeight: {
+        maxheigt8: ["60,5rem", "1300px"],
+      },
       colors: {
         lightBlueShift: ["rgb(63, 117, 168)"],
         darkBlueShift: ["rgb(28, 50, 91)"],

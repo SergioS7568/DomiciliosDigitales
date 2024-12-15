@@ -19,7 +19,7 @@ const RootView = () => {
   }, [theme]);
 
   return (
-    <div className="  bg-grayOption-0">
+    <div className="  justify-items-center flex flex-col  pl-6 pr-6">
       <div className="  z-0 ">
         <HeaderDD></HeaderDD>
         {/* <p className="text-3xl font-bold underline">Test</p> */}
