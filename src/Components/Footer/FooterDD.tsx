@@ -5,11 +5,11 @@ const FooterDD = () => {
   const year = today.getFullYear();
 
   return (
-    <div>
-      <p className="font-Roboto text-regularSizedText font-medium">
+    <div className="justify-items-center m-4 ">
+      <p className="font-Roboto  text-center  text-lg font-semibold">
         @{year} - Poder Judicial de Tucumán - Dirección de Sistemas
       </p>
-      <p className="font-Roboto text-regularSizedText font-medium">
+      <p className="font-Roboto text-lg font-semibold text-center">
         {" "}
         v{version}
       </p>

@@ -6,62 +6,11 @@ export interface FilteredData {
   profile: string;
 }
 
-// export const getUsersInfo = async (queryKey: [pageSize: number]) => {
-//   console.log(" you are in the api ");
-
-//   const [size] = queryKey;
-
-//   const searchParams = new URLSearchParams();
-//   const paging = "paging";
-
-//   if (size && size > 0) {
-//     searchParams.append("", `0,${size}`);
-//     const urlBackendAndPage = `${BACKEND_URL}${paging}${searchParams.toString()}`;
-
-//     console.log(" urlBackendAndPage      " + urlBackendAndPage);
-
-//     const resultado = await fetch(urlBackendAndPage);
-
-//     if (!resultado.ok) {
-//       throw new Error("Ocurrio un Problema, mensaje Obligatorio");
-//     }
-
-//     const data = await resultado.json();
-//     const datatransformed = transformedRequestedDataType(data.data);
-//     console.log("datatransformed   ", datatransformed);
-//     return datatransformed;
-//   } else {
-//     searchParams.append("", `0,15`);
-//     const urlBackendAndPage = `${BACKEND_URL}${paging}${searchParams.toString()}`;
-//     console.log(" urlBackendAndPage      " + urlBackendAndPage);
-
-//     const resultado = await fetch(urlBackendAndPage);
-
-//     if (!resultado.ok) {
-//       throw new Error("Ocurrio un Problema, mensaje Obligatorio");
-//     }
-
-//     const data = await resultado.json();
-//     const datatransformed = transformedRequestedDataType(data.data);
-//     console.log("datatransformed   ", datatransformed);
-//     return datatransformed;
-//   }
-
-//   const emptyResult = size;
-
-//   return emptyResult;
-// };
-
 export const getUsersInfoFilter = async (
   queryKey: [filteredData: FilteredData, pageSize: number, pageNumber: number]
 ) => {
-  console.log(" you are in the api ");
-
   const [datafilter, size, position] = queryKey;
 
-  console.log(" datafilter ", datafilter);
-  console.log(" size ", size);
-  console.log(" position ", position);
   const searchParams = new URLSearchParams();
 
   if (size && size > 0) {
@@ -71,8 +20,6 @@ export const getUsersInfoFilter = async (
       datafilter.name.trim() ||
       datafilter.profile.trim()
     ) {
-      console.log(" inside 1");
-
       if (datafilter.name && datafilter.name.trim()) {
         filterselect += `name:${datafilter.name},`;
       }
@@ -84,7 +31,6 @@ export const getUsersInfoFilter = async (
       }
       filterselect += `&`;
     } else {
-      console.log(" inside 2 ");
       filterselect += `&`;
     }
 
@@ -93,8 +39,6 @@ export const getUsersInfoFilter = async (
 
     const urlBackendAndPage = `${BACKEND_URL}search=${filterselect}${searchParams.toString()}`;
 
-    console.log(" urlBackendAndPage      " + urlBackendAndPage);
-
     const resultado = await fetch(urlBackendAndPage);
 
     if (!resultado.ok) {
@@ -103,15 +47,12 @@ export const getUsersInfoFilter = async (
 
     const data = await resultado.json();
     const datatransformed = transformedRequestedDataType(data.data);
-    console.log("datatransformed   ", datatransformed);
+
     return datatransformed;
   } else {
-    console.log(" outside ");
     searchParams.append("paging", `0,15`);
     const urlBackendAndPage = `${BACKEND_URL}${searchParams.toString()}`;
 
-    console.log(" urlBackendAndPage      " + urlBackendAndPage);
-
     const resultado = await fetch(urlBackendAndPage);
 
     if (!resultado.ok) {
@@ -120,7 +61,7 @@ export const getUsersInfoFilter = async (
 
     const data = await resultado.json();
     const datatransformed = transformedRequestedDataType(data.data);
-    console.log("datatransformed   ", datatransformed);
+
     return datatransformed;
   }
 };
