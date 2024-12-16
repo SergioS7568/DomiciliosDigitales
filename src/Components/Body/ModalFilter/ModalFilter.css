@@ -1,0 +1,23 @@
+.modal-overlay {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0%;
+  background: rbga(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-box {
+  display: block;
+
+  width: 90%;
+  max-width: 700px;
+  min-width: fit-content;
+  min-height: fit-content;
+  height: 50%;
+  max-height: 450px;
+
+  border-radius: 1rem;
+}
