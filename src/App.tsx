@@ -3,9 +3,9 @@ import RootView from "./RootView/RootView";
 
 function App() {
   return (
-    <>
+    <div className="    ">
       <RootView></RootView>
-    </>
+    </div>
   );
 }
 
