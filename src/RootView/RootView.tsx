@@ -25,7 +25,7 @@ const RootView = () => {
       className={
         dark
           ? "bg-blackOption-0 dark pl-4 pr-4 text-slate-300  min-h-screen font-roboto dark  "
-          : "bg-grayOption-0  pl-4 pr-4  text-darkGrayOption-0 min-h-scree font-roboto "
+          : "bg-grayOption-0  pl-4 pr-4  text-darkGrayOption-0 min-h-screen font-roboto "
       }
     >
       <div className="   flex flex-col ">

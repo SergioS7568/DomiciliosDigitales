@@ -76,8 +76,8 @@ const TableContent = (props: Props) => {
         </p>
       ) : (
         <div>
-          <div className=" max-sm:hidden max-md:hidden mt-2 pb-2 block... bg-slate-50 dark:bg-darkGrayOption-0 rounded-lg ">
-            <table className="table  dark:bg-darkGrayOption-0  bg-white ">
+          <div className=" max-sm:hidden max-md:hidden mt-2 pt-4 pb-2 block... bg-slate-50 dark:bg-darkGrayOption-0 rounded-lg ">
+            <table className="table  dark:bg-darkGrayOption-0  bg-white  ">
               <thead>
                 <tr>
                   <td className=" text-xl font-bold text-darkGrayOption-0   dark:text-slate-300 ">
@@ -97,8 +97,8 @@ const TableContent = (props: Props) => {
                   return (
                     <React.Fragment key={ApiResult.id}>
                       <tr>
-                        <td colSpan={3}>
-                          <div className="divider divider-end  mt-0 mb-0"></div>
+                        <td colSpan={3} className="p-0">
+                          <div className="divider divider-end p-0  mt-0 mb-0"></div>
                         </td>
                       </tr>
                       <tr className="font-medium text-lg">

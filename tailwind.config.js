@@ -26,7 +26,7 @@ export default {
       colors: {
         lightBlueShift: ["rgb(63, 117, 168)"],
         darkBlueShift: ["rgb(28, 50, 91)"],
-        grayOption: ["#8f8f8f"],
+        grayOption: ["rgb(214, 214, 214)"],
         blackOption: ["rgb(40, 40, 40)"],
         darkGrayOption: ["rgb(30, 30, 30)"],
       },
