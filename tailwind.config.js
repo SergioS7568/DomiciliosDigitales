@@ -7,8 +7,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        roboto: ["Roboto", "sans-serif"],
-        robotoArial: ["Roboto", "Arial"],
+        roboto: ["Roboto Slab", "sans-serif"],
+        robotoArial: ["Roboto Slab", "Arial"],
       },
       fontSize: {
         regularSizedText: ["17.6px", "1.5"],
