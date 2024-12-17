@@ -1,19 +1,35 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { FilteredData, getUsersInfoFilter } from "../../../Lib/getUsersInfo";
+import { FilteredData, getUsersInfoFilter } from "../../../lib/getUsersInfo";
 import Cards from "../Cards/Cards";
 import ButtonsNavegation from "../Buttons/ButtonsNavegation";
 import React from "react";
+import ImageSwitch from "../../ImageSwitch/ImageSwitch";
+import { UseFormSetValue } from "react-hook-form";
+
+interface Datatype {
+  pageSize: number;
+  pageNumber: number;
+  name: string;
+  lastname: string;
+  profile: string;
+}
 
 interface Props {
-  filteredData: FilteredData;
+  unfilteredData: [string, string, string];
   pageSizeWatch: number;
+  setValue: UseFormSetValue<Datatype>;
   pageNumber: number;
-  setPageNumber: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const TableContent = (props: Props) => {
-  const { filteredData, pageSizeWatch, pageNumber, setPageNumber } = props;
+  const { unfilteredData, pageSizeWatch, pageNumber, setValue } = props;
+
+  const filteredData = {
+    lastname: unfilteredData[1].toString(),
+    name: unfilteredData[0].toString(),
+    profile: unfilteredData[2].toString(),
+  };
 
   const {
     data: ApiUser,
@@ -35,20 +51,7 @@ const TableContent = (props: Props) => {
         </div>
       ) : isError ? (
         <p className="pl-3 rounded-lg  bg-red-100 text-darkGrayOption-0 min-h-16 text-start items-center flex flex-row gap-1 text-lg font-semibold ">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-6 text-red-900"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"
-            />
-          </svg>
+          <ImageSwitch imageName="errorMessage" imageProperties="" />
           No se encontraron resultados para la búsqueda ingresada. Por favor,
           intente con otros valores.
         </p>
@@ -57,20 +60,7 @@ const TableContent = (props: Props) => {
           className="pl-3 rounded-lg  bg-orange-100 
          min-h-16 text-start items-center flex flex-row gap-1 text-lg font-semibold text-darkGrayOption-0  "
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="size-16 md:size-8  text-orange-600 sm:self-center  "
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"
-            />
-          </svg>
+          <ImageSwitch imageName="warningMessage" imageProperties="" />
           No se encontraron resultados para la búsqueda ingresada. Por favor,
           intente con otros valores.
         </p>
@@ -97,8 +87,8 @@ const TableContent = (props: Props) => {
                   return (
                     <React.Fragment key={ApiResult.id}>
                       <tr>
-                        <td colSpan={3} className="p-0">
-                          <div className="divider divider-end p-0  mt-0 mb-0"></div>
+                        <td colSpan={3} className="p-0 m-0">
+                          <div className="divider divider-end p-0  mt-0 mb-0  "></div>
                         </td>
                       </tr>
                       <tr className="font-medium text-lg">
@@ -130,7 +120,7 @@ const TableContent = (props: Props) => {
             totalElements={ApiUser?.pagescontent.totalElements}
             totalPages={ApiUser?.pagescontent.totalPages}
             offset={ApiUser?.pagescontent.offset}
-            setPageNumber={setPageNumber}
+            setValue={setValue}
             pageNumberSET={pageNumber}
           ></ButtonsNavegation>
         </div>
