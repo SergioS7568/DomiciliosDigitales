@@ -1,3 +1,14 @@
+import { UseFormSetValue } from "react-hook-form";
+import ImageSwitch from "../../ImageSwitch/ImageSwitch";
+
+interface Datatype {
+  pageSize: number;
+  pageNumber: number;
+  name: string;
+  lastname: string;
+  profile: string;
+}
+
 interface Props {
   offset: number | undefined;
   pageNumber: number | undefined;
@@ -7,7 +18,7 @@ interface Props {
   numberOfElements: number | undefined;
   last: boolean | undefined;
   first: boolean | undefined;
-  setPageNumber: React.Dispatch<React.SetStateAction<number>>;
+  setValue: UseFormSetValue<Datatype>;
   pageNumberSET: number;
 }
 
@@ -15,16 +26,17 @@ const ButtonsNavegation = (props: Props) => {
   const {
     pageNumber = 0,
 
-    pageSize,
+    numberOfElements,
     totalElements,
     totalPages = 0,
 
-    setPageNumber,
+    setValue,
   } = props;
 
   const handlePageMovement = (value: number) => {
     window.scrollTo({ top: 100, behavior: "smooth" });
-    setPageNumber(value);
+
+    setValue("pageNumber", value);
   };
 
   const oneFoward = pageNumber + 1;
@@ -41,36 +53,14 @@ const ButtonsNavegation = (props: Props) => {
             onClick={() => handlePageMovement(toFirstPage)}
             value={toFirstPage}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              className="size-6 font-bold  text-xs"
-            >
-              <path
-                fillRule="evenodd"
-                d="M3.22 7.595a.75.75 0 0 0 0 1.06l3.25 3.25a.75.75 0 0 0 1.06-1.06l-2.72-2.72 2.72-2.72a.75.75 0 0 0-1.06-1.06l-3.25 3.25Zm8.25-3.25-3.25 3.25a.75.75 0 0 0 0 1.06l3.25 3.25a.75.75 0 1 0 1.06-1.06l-2.72-2.72 2.72-2.72a.75.75 0 0 0-1.06-1.06Z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <ImageSwitch imageName="doubleArrowLeft" imageProperties="" />
           </button>
         ) : (
           <button
-            className="btn btn-circle   btn-outline  rounded-full disabled ml-0.5   text-xs"
+            className="btn btn-circle  btn-disabled btn-outline  rounded-full disabled ml-0.5   text-xs"
             value={toFirstPage}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              className="size-6 font-bold   text-xs "
-            >
-              <path
-                fillRule="evenodd"
-                d="M3.22 7.595a.75.75 0 0 0 0 1.06l3.25 3.25a.75.75 0 0 0 1.06-1.06l-2.72-2.72 2.72-2.72a.75.75 0 0 0-1.06-1.06l-3.25 3.25Zm8.25-3.25-3.25 3.25a.75.75 0 0 0 0 1.06l3.25 3.25a.75.75 0 1 0 1.06-1.06l-2.72-2.72 2.72-2.72a.75.75 0 0 0-1.06-1.06Z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <ImageSwitch imageName="doubleArrowLeft" imageProperties="" />
           </button>
         )}
         {pageNumber > 0 ? (
@@ -79,36 +69,14 @@ const ButtonsNavegation = (props: Props) => {
             onClick={() => handlePageMovement(oneBackward)}
             value={oneBackward}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              className="size-6 font-bold   text-xs"
-            >
-              <path
-                fillRule="evenodd"
-                d="M9.78 4.22a.75.75 0 0 1 0 1.06L7.06 8l2.72 2.72a.75.75 0 1 1-1.06 1.06L5.47 8.53a.75.75 0 0 1 0-1.06l3.25-3.25a.75.75 0 0 1 1.06 0Z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <ImageSwitch imageName="arrowLeft" imageProperties="" />
           </button>
         ) : (
           <button
-            className="btn  btn-circle  btn-outline  rounded-full disabled  ml-0.5  text-xs "
+            className="btn  btn-circle   btn-disabled  btn-outline  rounded-full disabled  ml-0.5  text-xs "
             value={oneBackward}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              className="size-6 font-bold   text-xs"
-            >
-              <path
-                fillRule="evenodd"
-                d="M9.78 4.22a.75.75 0 0 1 0 1.06L7.06 8l2.72 2.72a.75.75 0 1 1-1.06 1.06L5.47 8.53a.75.75 0 0 1 0-1.06l3.25-3.25a.75.75 0 0 1 1.06 0Z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <ImageSwitch imageName="arrowLeft" imageProperties="" />
           </button>
         )}
         {totalPages < 5 ? (
@@ -213,36 +181,14 @@ const ButtonsNavegation = (props: Props) => {
             onClick={() => handlePageMovement(oneFoward)}
             value={oneFoward}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              className="size-6 font-bold text-lg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M6.22 4.22a.75.75 0 0 1 1.06 0l3.25 3.25a.75.75 0 0 1 0 1.06l-3.25 3.25a.75.75 0 0 1-1.06-1.06L8.94 8 6.22 5.28a.75.75 0 0 1 0-1.06Z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <ImageSwitch imageName="arrowRight" imageProperties="" />
           </button>
         ) : (
           <button
-            className="btn btn-circle  btn-outline ml-0.5 rounded-full disabled "
+            className="btn btn-circle    btn-disabled btn-outline ml-0.5 rounded-full disabled "
             value={oneFoward}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              className="size-6 font-bold text-lg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M6.22 4.22a.75.75 0 0 1 1.06 0l3.25 3.25a.75.75 0 0 1 0 1.06l-3.25 3.25a.75.75 0 0 1-1.06-1.06L8.94 8 6.22 5.28a.75.75 0 0 1 0-1.06Z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <ImageSwitch imageName="arrowRight" imageProperties="" />
           </button>
         )}
         {pageNumber < totalPages - 1 ? (
@@ -251,42 +197,20 @@ const ButtonsNavegation = (props: Props) => {
             onClick={() => handlePageMovement(toLastPage)}
             value={toLastPage}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              className="size-6 font-bold text-lg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M12.78 7.595a.75.75 0 0 1 0 1.06l-3.25 3.25a.75.75 0 0 1-1.06-1.06l2.72-2.72-2.72-2.72a.75.75 0 0 1 1.06-1.06l3.25 3.25Zm-8.25-3.25 3.25 3.25a.75.75 0 0 1 0 1.06l-3.25 3.25a.75.75 0 0 1-1.06-1.06l2.72-2.72-2.72-2.72a.75.75 0 0 1 1.06-1.06Z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <ImageSwitch imageName="doubleArrowRight" imageProperties="" />
           </button>
         ) : (
           <button
-            className="btn  btn-circle  btn-outline ml-0.5 rounded-full disabled "
+            className="btn  btn-circle   btn-disabled btn-outline ml-0.5 rounded-full disabled "
             value={toLastPage}
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-              className="size-6 font-bold text-lg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M12.78 7.595a.75.75 0 0 1 0 1.06l-3.25 3.25a.75.75 0 0 1-1.06-1.06l2.72-2.72-2.72-2.72a.75.75 0 0 1 1.06-1.06l3.25 3.25Zm-8.25-3.25 3.25 3.25a.75.75 0 0 1 0 1.06l-3.25 3.25a.75.75 0 0 1-1.06-1.06l2.72-2.72-2.72-2.72a.75.75 0 0 1 1.06-1.06Z"
-                clipRule="evenodd"
-              />
-            </svg>
+            <ImageSwitch imageName="doubleArrowRight" imageProperties="" />
           </button>
         )}
       </div>
       <div className="self-center">
         <p className="text-lg font-semibold">
-          Mostrando {pageSize} entradas de {totalElements}
+          Mostrando {numberOfElements} entradas de {totalElements}
         </p>
       </div>
     </div>

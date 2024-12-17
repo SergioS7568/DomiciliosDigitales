@@ -1,12 +1,17 @@
 .modal-overlay {
+  position: absolute;
   width: 100vw;
   height: 100vh;
-  position: absolute;
-  top: 0%;
-  background: rbga(0, 0, 0, 0.7);
+  padding: 0;
+  margin: 0;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+  position: fixed;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
 }
 
 .modal-box {
@@ -21,3 +26,4 @@
 
   border-radius: 1rem;
 }
+/* hide scrollbar but allow scrolling */
